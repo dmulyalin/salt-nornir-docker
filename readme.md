@@ -48,10 +48,10 @@ salt_nornir_docker/
     ├── nornir_salt_data
     └── proxy
         └── proxy
-```		
-	
+```        
+    
 Folders description:
-	
+    
 - `SALT/master` mounted under salt-master container `/etc/salt/` folder and contains all master related configuration
 - `SALT/proxy` mounted under salt-minion container `/etc/salt/` folder and contains all proxy-minion related configuration
 - `SALT/nornir_salt_data` mounted under salt-minion container `/var/salt-nornir/` folder and contains files produced by `tf` and `nr.learn` functions
@@ -67,7 +67,7 @@ proxy:
   proxytype: nornir
 
 hosts:
-  ceos1:
+  R1:
     hostname: 10.0.1.4
     platform: cisco_ios
     groups: [credentials]
@@ -78,11 +78,80 @@ groups:
     password: nornir
 ```
 
-Modify it accordingly to list details for network devices to manage them.
+Modify it accordingly to list details for network devices you planning to manage.
 
 Each time `SALT/master/pillar/nrp1.sls` pillar file modified, need to restart salt-minion container to pick up
 updated inventory data - `docker restart salt-minion_nrp1`. Alternatively, can run `nr_refresh` task - `salt nrp1 nr.task nr_refresh`
 from master.
+
+Platform attribute value is mandatory as it indicates what type of driver should be uses to manage device, here is a list where to find them:
+
+- Netmiko `plaform` attribute [values](https://github.com/ktbyers/netmiko/blob/develop/PLATFORMS.md#supported-ssh-device_type-values)
+- NAPALM `plaform` attribute [values](https://napalm.readthedocs.io/en/latest/support/)
+- Scrapli `plaform` attribute [values](https://scrapli.github.io/nornir_scrapli/user_guide/project_details/#supported-platforms)
+- Scrapli-Netconf does not need `plaform` attribute but supports additional settings through `connection_options`
+- Ncclient does not need `plaform` attribute but can support [device handlers](https://github.com/ncclient/ncclient#supported-device-handlers) through `connection_options`
+
+<details><summary>Example: Cisco IOS Inventory Data for Netmiko and Napalm</summary>
+```yaml
+hosts:
+  R1:
+    hostname: 10.0.1.4
+    platform: cisco_ios
+    groups: [credentials]
+          
+groups: 
+  credentials:
+    username: nornir
+    password: nornir
+```
+</details>
+
+<details><summary>Example:Arista cEOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient and HTTP connections</summary>
+```yaml
+hosts:
+  ceos1:
+    hostname: 10.0.1.4
+    platform: arista_eos
+    groups: [credentials, eos_params]
+          
+groups: 
+  credentials:
+    username: nornir
+    password: nornir
+    data:
+      ntp_servers: ["3.3.3.3", "3.3.3.4"]
+      syslog_servers: ["1.2.3.4", "4.3.2.1"] 
+  eos_params:
+    connection_options:
+      scrapli:
+        platform: arista_eos
+        extras:
+          auth_strict_key: False
+          ssh_config_file: False
+      scrapli_netconf:
+        port: 830
+        extras:
+          ssh_config_file: True
+          auth_strict_key: False
+          transport: paramiko
+          transport_options: 
+            netconf_force_pty: False
+      napalm:
+        platform: eos
+        optional_args:
+          transport: http
+          port: 80  
+      ncclient:
+        port: 830
+        extras:
+          allow_agent: False
+          hostkey_verify: False
+      http:
+        port: 80
+        transport: http
+```
+</details>
 
 ## Useful commands
 
