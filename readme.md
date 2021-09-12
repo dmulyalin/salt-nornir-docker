@@ -93,6 +93,7 @@ Platform attribute value is mandatory as it indicates what type of driver should
 - Ncclient does not need `plaform` attribute but can support [device handlers](https://github.com/ncclient/ncclient#supported-device-handlers) through `connection_options`
 
 <details><summary>Example: Cisco IOS Inventory Data for Netmiko and Napalm</summary>
+
 ```yaml
 hosts:
   R1:
@@ -108,6 +109,7 @@ groups:
 </details>
 
 <details><summary>Example:Arista cEOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient and HTTP connections</summary>
+
 ```yaml
 hosts:
   ceos1:
