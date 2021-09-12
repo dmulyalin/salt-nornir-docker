@@ -1,6 +1,5 @@
 proxy:
   proxytype: nornir
-  multiprocessing: True
 
 hosts:
   ceos1:

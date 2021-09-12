@@ -1,0 +1,9 @@
+*.pyc
+*.log
+Data/*
+Output/*
+ttp.egg-info/*
+dist/*
+build/*
+private/*
+.ipynb_checkpoints
