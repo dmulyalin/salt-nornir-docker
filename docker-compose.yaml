@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+
+  salt-master:
+    container_name: salt-master
+    hostname: 'salt-master'
+    build:
+      context: .
+      dockerfile: SALT/Dockerfile.master
+      args:
+        SALT_VERSION: "${SALT_VERSION:-3003}"
+    environment:
+      LOG_LEVEL: "${LOG_LEVEL:-debug}"
+    volumes:
+      # bind folder with master files
+      - type: bind
+        source: ./SALT/master/
+        target: /etc/salt/   
+        
+  salt-minion:
+    container_name: "salt-minion_${PROXY_ID:-nrp1}"
+    hostname: "${PROXY_ID:-nrp1}"
+    build:
+      context: .
+      dockerfile: SALT/Dockerfile.minion
+      args:
+        SALT_VERSION: "${SALT_VERSION:-3003}"
+    environment:
+      LOG_LEVEL: "${LOG_LEVEL:-debug}"
+      PROXY_ID: "${PROXY_ID:-nrp1}"
+    depends_on:
+      - salt-master
+    volumes:
+      # bind folder with proxy minion files
+      - type: bind
+        source: ./SALT/proxy/
+        target: /etc/salt/ 
+      # bind folder with proxy minion data files        
+      - type: bind
+        source: ./SALT/nornir_salt_data/
+        target: /var/nornir-salt/  
