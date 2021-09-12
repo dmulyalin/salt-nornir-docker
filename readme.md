@@ -91,6 +91,7 @@ Platform attribute value is mandatory as it indicates what type of driver should
 - Scrapli `plaform` attribute [values](https://scrapli.github.io/nornir_scrapli/user_guide/project_details/#supported-platforms)
 - Scrapli-Netconf does not need `plaform` attribute but supports additional settings through `connection_options`
 - Ncclient does not need `plaform` attribute but can support [device handlers](https://github.com/ncclient/ncclient#supported-device-handlers) through `connection_options`
+- HTTP connection plugin does not need `plaform` attribute but supports additional settings through `connection_options`
 
 <details><summary>Example: Cisco IOS Inventory Data for Netmiko and Napalm</summary>
 
