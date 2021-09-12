@@ -81,8 +81,7 @@ groups:
 Modify it accordingly to list details for network devices you planning to manage.
 
 Each time `SALT/master/pillar/nrp1.sls` pillar file modified, need to restart salt-minion container to pick up
-updated inventory data - `docker restart salt-minion_nrp1`. Alternatively, can run `nr_refresh` task - `salt nrp1 nr.task nr_refresh`
-from master.
+updated inventory data - `docker restart salt-minion_nrp1`.
 
 Platform attribute value is mandatory as it indicates what type of driver should be uses to manage device, here is a list where to find them:
 
