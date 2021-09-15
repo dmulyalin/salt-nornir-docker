@@ -3,14 +3,14 @@
 This repository contains files to start SaltStack Master and 
 single instance of Nornir Proxy Minion using Docker containers.
 
-**Why?** - To speed up the process of getting started with SaltStack Nornir Proxy Minion 
+**Why?** - To speed up the process of getting started with SaltStack Nornir Proxy Minion Network Automation
 
 ## Starting the environment
 
 1. Install [Docker](https://docs.docker.com/engine/install/) and [Docker-Compose](https://docs.docker.com/compose/install/)
-2. Install [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git` - or download it manually from Github.
+2. Install [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git` - or download manually from GitHub.
 3. Modify Nornir Proxy Minion Pillar inventory to add network devices - see notes below
-4. Move to folder with `docker-compose.yaml` file and start containers: `docker-compose up`, build process takes 5-10 minutes
+4. `cd` to folder with `docker-compose.yaml` file and start containers: `docker-compose up`, build takes 5-10 minutes
 6. Drop into salt-master container shell and accept minion key: `docker exec -it salt-master bash`, `salt-key -a nrp1`
 7. Start managing your devices
 
@@ -21,7 +21,7 @@ Base image used to build containers is `centos:7`
 Docker-compose makes use of these variables stored in `.env` file:
 
 - `SALT_VERSION` - version of SaltStack to install, default is 3003, can be any of listed in [this repository](https://repo.saltproject.io/#rhel) for `REDHAT / CENTOS 7 PY3`
-- `LOG_LEVEL` - loggin level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
+- `LOG_LEVEL` - logging level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
 - `PROXY_ID` - Nornir Proxy Minion ID, default is 'nrp1'
 
 Feel free to adjust them as per your needs.
@@ -52,9 +52,9 @@ salt_nornir_docker/
     
 Folders description:
     
-- `SALT/master` mounted under salt-master container `/etc/salt/` folder and contains all master related configuration
-- `SALT/proxy` mounted under salt-minion container `/etc/salt/` folder and contains all proxy-minion related configuration
-- `SALT/nornir_salt_data` mounted under salt-minion container `/var/salt-nornir/` folder and contains files produced by `tf` and `nr.learn` functions
+- `SALT/master` mounted under salt-master container `/etc/salt/` folder, contains master related configuration
+- `SALT/proxy` mounted under salt-minion container `/etc/salt/` folder, contains proxy-minion related configuration
+- `SALT/nornir_salt_data` mounted under salt-minion container `/var/salt-nornir/` folder for files produced by `tf` and `nr.learn` functions
 
 ## Configuring Nornir Proxy Minion
 
@@ -83,7 +83,7 @@ Modify it accordingly to list details for network devices you planning to manage
 Each time `SALT/master/pillar/nrp1.sls` pillar file modified, need to restart salt-minion container to pick up
 updated inventory data - `docker restart salt-minion_nrp1`.
 
-Platform attribute value is mandatory as it indicates what type of driver should be uses to manage device, here is a list where to find them:
+Platform attribute value is mandatory as it indicates what type of driver to use for device managing, here is a list where to find them:
 
 - Netmiko `plaform` attribute [values](https://github.com/ktbyers/netmiko/blob/develop/PLATFORMS.md#supported-ssh-device_type-values)
 - NAPALM `plaform` attribute [values](https://napalm.readthedocs.io/en/latest/support/)
