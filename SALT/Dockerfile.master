@@ -2,7 +2,7 @@ FROM centos:7
 
 # install SALT Master
 RUN yum install -y python3
-RUN python3 -m pip install pip --upgrade
+RUN python3 -m pip install pip setuptools --upgrade
 RUN rpm --import https://repo.saltproject.io/py3/redhat/7/x86_64/latest/SALTSTACK-GPG-KEY.pub
 
 ARG SALT_VERSION=3003
@@ -11,7 +11,6 @@ RUN curl -fsSL "https://repo.saltproject.io/py3/redhat/7/x86_64/${SALT_VERSION}.
 RUN yum install -y salt-master
 
 # do python libs installation
-RUN python3 -m pip install -U pip setuptools 
 RUN python3 -m pip install tabulate
 RUN python3 -m pip install salt-nornir --ignore-installed PyYAML
 

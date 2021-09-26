@@ -2,7 +2,7 @@ FROM centos:7
 
 # install SALT Minion
 RUN yum install -y python3
-RUN python3 -m pip install pip --upgrade
+RUN python3 -m pip install pip setuptools --upgrade
 RUN rpm --import https://repo.saltproject.io/py3/redhat/7/x86_64/latest/SALTSTACK-GPG-KEY.pub
 
 ARG SALT_VERSION=3003
@@ -11,18 +11,10 @@ RUN curl -fsSL https://repo.saltproject.io/py3/redhat/7/x86_64/${SALT_VERSION}.r
 RUN yum install -y salt-minion
 
 # do python3 libs installation
-RUN python3 -m pip install -U pip setuptools 
-RUN python3 -m pip install ttp
-RUN python3 -m pip install xmltodict
-RUN python3 -m pip install tabulate
-RUN python3 -m pip install nornir_salt
-RUN python3 -m pip install salt_nornir --ignore-installed PyYAML
-RUN python3 -m pip install ncclient
+COPY ./SALT/requirements.minion.txt /tmp/requirements.txt
+RUN python3 -m pip install -r /tmp/requirements.txt --ignore-installed PyYAML
 
-# Install scrapli and dependencies. It needs ntc-template<2.0.0,>=1.1.0,
-RUN python3 -m pip uninstall -y ntc-templates
-RUN python3 -m pip install ntc-templates==1.7.0
-RUN python3 -m pip install nornir_scrapli
+# Install scrapli dependencies
 RUN yum install -y openssh-server openssh-clients
 
 ENTRYPOINT salt-proxy --proxyid=$PROXY_ID -l $LOG_LEVEL
