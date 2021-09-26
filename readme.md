@@ -38,7 +38,7 @@ salt_nornir_docker/
 └── SALT
     ├── Dockerfile.master
     ├── Dockerfile.minion
-	├── requirements.minion.txt
+    ├── requirements.minion.txt
     ├── master
     │   ├── master
     │   ├── pillar
@@ -60,7 +60,9 @@ Folders description:
 ## Python Packages Version
 
 `requirements.minion.txt` indicates versions of Python packages that were tested and confirmed working together. 
-Feel free to adjust it as per your requirements.
+This file used to drive installation for minion container, feel free to adjust it as per your requirements.
+
+Python version tested is 3.6
 
 ## Configuring Nornir Proxy Minion
 
