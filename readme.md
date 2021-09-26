@@ -38,6 +38,7 @@ salt_nornir_docker/
 └── SALT
     ├── Dockerfile.master
     ├── Dockerfile.minion
+	├── requirements.minion.txt
     ├── master
     │   ├── master
     │   ├── pillar
@@ -55,6 +56,11 @@ Folders description:
 - `SALT/master` mounted under salt-master container `/etc/salt/` folder, contains master related configuration
 - `SALT/proxy` mounted under salt-minion container `/etc/salt/` folder, contains proxy-minion related configuration
 - `SALT/nornir_salt_data` mounted under salt-minion container `/var/salt-nornir/` folder for files produced by `tf` and `nr.learn` functions
+
+## Python Packages Version
+
+`requirements.minion.txt` indicates versions of Python packages that were tested and confirmed working together. 
+Feel free to adjust it as per your requirements.
 
 ## Configuring Nornir Proxy Minion
 
