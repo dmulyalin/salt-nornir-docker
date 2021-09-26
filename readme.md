@@ -60,7 +60,11 @@ Folders description:
 ## Python Packages Version
 
 `requirements.minion.txt` indicates versions of Python packages that were tested and confirmed working together. 
-This file used to drive installation for minion container, feel free to adjust it as per your requirements.
+This file used to drive installation for Python packages for minion container and installs all the modules that might 
+be used by Salt Nornir Proxy Minion, feel free to adjust it as per your requirements if you only need subset of them.
+
+For example, if no plans to use Netconf to manage devices can remove related packages from `requirements.minion.txt`
+such as `ncclient` and `scrapli-netconf`.
 
 Python version tested is 3.6
 
