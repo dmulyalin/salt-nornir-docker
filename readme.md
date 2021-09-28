@@ -11,8 +11,9 @@ single instance of Nornir Proxy Minion using Docker containers.
 2. Install [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git` - or download manually from GitHub.
 3. Modify Nornir Proxy Minion Pillar inventory to add network devices - see notes below
 4. `cd` to folder with `docker-compose.yaml` file and start containers: `docker-compose up`, build takes 5-10 minutes
-6. Drop into salt-master container shell and accept minion key: `docker exec -it salt-master bash`, `salt-key -a nrp1`
-7. Start managing your devices
+5. Drop into salt-master container shell and accept minion key: `docker exec -it salt-master bash`, `salt-key -a nrp1`
+
+Start managing your devices
 
 ## Docker-Compose build and environment variables
 
@@ -24,7 +25,7 @@ Docker-compose makes use of these variables stored in `.env` file:
 - `LOG_LEVEL` - logging level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
 - `PROXY_ID` - Nornir Proxy Minion ID, default is 'nrp1'
 
-Feel free to adjust them as per your needs.
+Adjust above variables to meet your needs.
 
 ## Folders structure
 
@@ -60,8 +61,8 @@ Folders description:
 ## Python Packages Version
 
 `requirements.minion.txt` indicates versions of Python packages that were tested and confirmed working together. 
-This file used to drive installation for Python packages for minion container and installs all the modules that might 
-be used by Salt Nornir Proxy Minion, feel free to adjust it as per your requirements if you only need subset of them.
+This file used to install Python packages for minion container of all the modules that might be used by Salt 
+Nornir Proxy Minion, edit requirements file to remove unnecessary packages or change versions.
 
 For example, if no plans to use Netconf to manage devices can remove related packages from `requirements.minion.txt`
 such as `ncclient` and `scrapli-netconf`.
@@ -171,13 +172,21 @@ groups:
 
 Some useful commands.
 
-| Command                           | Description                                       |
-|-----------------------------------|---------------------------------------------------|
-| docker exec -it salt-master bash  | Drop into salt-master container shell             |
-| docker exec -it salt-minion bash  | Drop into salt-minion container shell             |
-| docker restart salt-master        | Restart salt-master container                     |
-| docker restart salt-minion_nrp1   | Restart salt-minion container                     |
-| docker-compose stop               | stop salt-minion and master containers altogether |
-| docker-compose up                 | start salt-minion and master containers           |
-| docker-compose build              | rebuild containers                                |
+| Command                                 | Description                                       |
+|-----------------------------------------|---------------------------------------------------|
+| docker exec -it salt-master bash        | Drop into salt-master container shell             |
+| docker exec -it salt-minion bash        | Drop into salt-minion container shell             |
+| docker restart salt-master              | Restart salt-master container                     |
+| docker restart salt-minion_nrp1         | Restart salt-minion container                     |
+| docker-compose stop                     | stop salt-minion and master containers altogether |
+| docker-compose up                       | start salt-minion and master containers           |
+| docker-compose build                    | rebuild containers                                |
+| salt-key                                | manage proxy minions keys                         |
+| salt nrp1 test.ping                     | verify that process is running                    |
+| salt nrp1 nr.nornir stats               | check statistics for Nornir Proxy Minion          |
+| salt nrp1 nr.nornir test                | test task to verify module operation              |
+| salt nrp1 nr.nornir inventory           | to check Nornir inventory content                 |
+| salt nrp1 nr.task nr_test               | test task to verify Nornir operation              |
+| salt nrp1 nr.cli "show version"         | run show commands                                 |
+| salt nrp1 nr.cfg "logging host 1.1.1.1" | edit configuration                                |
 
