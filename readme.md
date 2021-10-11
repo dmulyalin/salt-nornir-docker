@@ -121,7 +121,7 @@ groups:
 ```
 </details>
 
-<details><summary>Example:Arista cEOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient and HTTP connections</summary>
+<details><summary>Example:Arista cEOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient, PyGNMI and HTTP RESTCONF connections</summary>
 
 ```yaml
 hosts:
@@ -163,8 +163,18 @@ groups:
           allow_agent: False
           hostkey_verify: False
       http:
-        port: 80
-        transport: http
+        port: 6020
+        extras:
+          transport: https
+          verify: False
+          base_url: "restconf/data"
+          headers:
+            Content-Type: "application/yang-data+json"
+            Accept: "application/yang-data+json"
+      pygnmi:
+        port: 6030
+        extras:
+          insecure: True
 ```
 </details>
 
