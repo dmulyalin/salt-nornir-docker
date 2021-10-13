@@ -7,13 +7,15 @@ single instance of Nornir Proxy Minion using Docker containers.
 
 ## Starting the environment
 
-1. Install [Docker](https://docs.docker.com/engine/install/) and [Docker-Compose](https://docs.docker.com/compose/install/)
-2. Install [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git` - or download manually from GitHub.
-3. Modify Nornir Proxy Minion Pillar inventory to add network devices - see notes below
-4. `cd` to folder with `docker-compose.yaml` file and start containers: `docker-compose up`, build takes 5-10 minutes
-5. Drop into salt-master container shell and accept minion key: `docker exec -it salt-master bash`, `salt-key -a nrp1`
+Providing that you installed [Docker](https://docs.docker.com/engine/install/), [Docker-Compose](https://docs.docker.com/compose/install/)
+and [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git):
+ 
+1. Clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git`
+2. `cd` to folder with `docker-compose.yaml` file and start containers: `docker-compose up`, build takes 5-10 minutes
+3. Drop into salt-master container shell `docker exec -it salt-master bash` and accept minion key `salt-key -a nrp1`
 
-Start managing your devices
+To start managing your devices add them to Nornir Proxy Minion Pillar inventory, see notes below, and
+restart Proxy Minion container `docker restart salt-minion_nrp1`
 
 ## Docker-Compose build and environment variables
 
