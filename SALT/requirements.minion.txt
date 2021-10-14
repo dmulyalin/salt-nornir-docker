@@ -17,5 +17,5 @@ ttp==0.8.0
 xmltodict==0.12.0
 jmespath==0.10.0
 pygnmi==0.5.3
-nornir-salt==0.6.1
-salt-nornir==0.6.1
+nornir-salt==0.6.*
+salt-nornir==0.6.*
