@@ -23,7 +23,7 @@ Base image used to build containers is `centos:7`
 
 Docker-compose makes use of these variables stored in `.env` file:
 
-- `SALT_VERSION` - version of SaltStack to install, default is 3003, can be any of listed in [this repository](https://repo.saltproject.io/#rhel) for `REDHAT / CENTOS 7 PY3`
+- `SALT_VERSION` - version of SaltStack to install, default is 3004, can be any of listed in [this repository](https://repo.saltproject.io/#rhel) for `REDHAT / CENTOS 7 PY3`
 - `LOG_LEVEL` - logging level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
 - `PROXY_ID` - Nornir Proxy Minion ID, default is 'nrp1'
 

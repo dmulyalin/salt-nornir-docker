@@ -3,15 +3,15 @@ version: "3.9"
 services:
 
   salt-master:
-    container_name: salt-master
-    hostname: 'salt-master'
+    container_name: "salt-master-${SALT_VERSION}"
+    hostname: 'salt-master-${SALT_VERSION}'
     build:
       context: .
       dockerfile: SALT/Dockerfile.master
       args:
-        SALT_VERSION: "${SALT_VERSION:-3003}"
+        SALT_VERSION: "${SALT_VERSION}"
     environment:
-      LOG_LEVEL: "${LOG_LEVEL:-debug}"
+      LOG_LEVEL: "${LOG_LEVEL}"
     volumes:
       # bind folder with master files
       - type: bind
@@ -19,16 +19,16 @@ services:
         target: /etc/salt/   
         
   salt-minion:
-    container_name: "salt-minion_${PROXY_ID:-nrp1}"
-    hostname: "${PROXY_ID:-nrp1}"
+    container_name: "salt-minion-${SALT_VERSION}-${PROXY_ID}"
+    hostname: "salt-minion-${SALT_VERSION}-${PROXY_ID}"
     build:
       context: .
       dockerfile: SALT/Dockerfile.minion
       args:
-        SALT_VERSION: "${SALT_VERSION:-3003}"
+        SALT_VERSION: "${SALT_VERSION}"
     environment:
-      LOG_LEVEL: "${LOG_LEVEL:-debug}"
-      PROXY_ID: "${PROXY_ID:-nrp1}"
+      LOG_LEVEL: "${LOG_LEVEL}"
+      PROXY_ID: "${PROXY_ID}"
     depends_on:
       - salt-master
     volumes:

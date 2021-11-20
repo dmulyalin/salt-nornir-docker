@@ -1,5 +1,6 @@
 interface: 0.0.0.0
 pki_dir: /etc/salt/pki/master
+timeout: 120
 
 file_roots:
   base:
