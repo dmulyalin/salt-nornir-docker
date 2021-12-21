@@ -108,7 +108,7 @@ Platform attribute value is mandatory as it indicates what type of driver to use
 - HTTP connection plugin does not need `plaform` attribute but supports additional settings through `connection_options`
 - PyATS/Genie `os`/`platform` attribute values found in [Unicon docs](https://developer.cisco.com/docs/unicon/)
 
-<details><summary>Example: Cisco IOS Inventory Data for Netmiko and Napalm</summary>
+<details><summary>Example: Cisco IOS Inventory Data for Netmiko</summary>
 
 ```yaml
 hosts:
