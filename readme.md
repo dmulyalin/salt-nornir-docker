@@ -12,7 +12,7 @@ and [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git):
  
 1. Clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git`
 2. `cd` to folder with `docker-compose.yaml` file and start containers: `docker-compose up`, build takes 5-10 minutes
-3. Access salt-master container shell `docker exec -it salt-master bash` and accept minion key `salt-key -a nrp1`
+3. Access salt-master container shell `docker exec -it salt-master-3004 bash` and accept minion key `salt-key -a nrp1`
 
 By default `nrp1` proxy pillar comes with configuration for always-on sandbox devices, as a result
 can start experimenting with proxy-minion to interact with network devices straight away.
@@ -112,7 +112,7 @@ device managing, here is a list where to find `platform` attribute values:
 - HTTP connection plugin does not need `plaform` attribute but supports additional settings through `connection_options`
 - PyATS/Genie `os`/`platform` attribute values found in [Unicon docs](https://developer.cisco.com/docs/unicon/)
 
-Inventory data for Nornir proxy Minion stored on Master machine in pillar files, below are examples of such pillar files
+Inventory data for Nornir proxy Minion stored on Master machine in pillar files, below are examples of pillar files
 to get started.
 
 <details><summary>Example: Cisco IOS Inventory Data for Netmiko</summary>
@@ -364,6 +364,7 @@ Some useful commands.
 | salt nrp1 nr.nornir stats               | check statistics for Nornir Proxy Minion          |
 | salt nrp1 nr.nornir test                | test task to verify module operation              |
 | salt nrp1 nr.nornir inventory           | to check Nornir inventory content                 |
+| salt nrp1 nr.nornir hosts               | to list managed hosts names                       |
 | salt nrp1 nr.task nr_test               | test task to verify Nornir operation              |
 | salt nrp1 nr.cli "show version"         | run show commands                                 |
 | salt nrp1 nr.cfg "logging host 1.1.1.1" | edit configuration                                |
