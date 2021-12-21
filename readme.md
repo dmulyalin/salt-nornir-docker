@@ -12,7 +12,10 @@ and [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git):
  
 1. Clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git`
 2. `cd` to folder with `docker-compose.yaml` file and start containers: `docker-compose up`, build takes 5-10 minutes
-3. Drop into salt-master container shell `docker exec -it salt-master bash` and accept minion key `salt-key -a nrp1`
+3. Access salt-master container shell `docker exec -it salt-master bash` and accept minion key `salt-key -a nrp1`
+
+By default `nrp1` proxy pillar comes with configuration for always-on sandbox devices, as a result
+can start experimenting with proxy-minion to interact with network devices straight away.
 
 To start managing your devices add them to Nornir Proxy Minion Pillar inventory, see notes below, and
 restart Proxy Minion container `docker restart salt-minion_nrp1`
@@ -93,12 +96,13 @@ groups:
     password: nornir
 ```
 
-Modify it accordingly to list details for network devices you planning to manage.
+Once ready, modify it accordingly to list details for network devices you planning to manage.
 
 Each time `SALT/master/pillar/nrp1.sls` pillar file modified, need to restart salt-minion container to pick up
 updated inventory data - `docker restart salt-minion_nrp1`.
 
-Platform attribute value is mandatory as it indicates what type of driver to use for device managing, here is a list where to find them:
+Platform attribute value is mandatory as connections plugins need it to understand what type of driver to use for 
+device managing, here is a list where to find `platform` attribute values:
 
 - Netmiko `plaform` attribute [values](https://github.com/ktbyers/netmiko/blob/develop/PLATFORMS.md#supported-ssh-device_type-values)
 - NAPALM `plaform` attribute [values](https://napalm.readthedocs.io/en/latest/support/)
@@ -108,9 +112,15 @@ Platform attribute value is mandatory as it indicates what type of driver to use
 - HTTP connection plugin does not need `plaform` attribute but supports additional settings through `connection_options`
 - PyATS/Genie `os`/`platform` attribute values found in [Unicon docs](https://developer.cisco.com/docs/unicon/)
 
+Inventory data for Nornir proxy Minion stored on Master machine in pillar files, below are examples of such pillar files
+to get started.
+
 <details><summary>Example: Cisco IOS Inventory Data for Netmiko</summary>
 
 ```yaml
+proxy:
+  proxytype: nornir
+  
 hosts:
   R1:
     hostname: 10.0.1.4
@@ -124,7 +134,7 @@ groups:
 ```
 </details>
 
-<details><summary>Example:Arista cEOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient, PyGNMI, PyATS and HTTP RESTCONF connections</summary>
+<details><summary>Example: Arista cEOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient, PyGNMI, PyATS and HTTP RESTCONF connections</summary>
 
 ```yaml
 proxy:
@@ -202,7 +212,7 @@ groups:
 ```
 </details>
 
-<details><summary>Example:Cisco IOSXE/IOSXR/NXOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient, PyATS and HTTP (IOSXE only) connections using always-on sandboxes</summary>
+<details><summary>Example: Cisco IOSXE/IOSXR/NXOS Inventory Data for Netmiko, Napalm, Scrapli, Scrapli-Netconf, Ncclient, PyATS and HTTP (IOSXE only) connections using always-on sandboxes</summary>
 
 ```yaml
 proxy:
