@@ -1,0 +1,23 @@
+<nc:config xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <interfaces xmlns="http://openconfig.net/yang/interfaces" nc:operation="merge">
+    <interface>
+{% if host.platform == "cisco_ios" or host.platform == "cisco_xr" %}
+      <name>Loopback555</name>
+{% elif host.platform == "nxos_ssh" %}
+      <name>lo555</name>
+{% endif %}
+      <config>
+        <type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">
+            ianaift:softwareLoopback
+        </type>
+        <description>Configured by Salt-Nornir using NETCONF</description>
+{% if host.platform == "cisco_ios" or host.platform == "cisco_xr" %}
+        <name>Loopback555</name>
+{% elif host.platform == "nxos_ssh" %}
+        <name>lo555</name>
+{% endif %}
+        <enabled>true</enabled>
+      </config>
+    </interface>
+  </interfaces>
+</nc:config>
