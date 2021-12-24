@@ -56,7 +56,7 @@ salt_nornir_docker/
     │   ├── states
     │   ├── templates
 	│   └── rpc
-    ├── nornir_salt_data
+    ├── salt_nornir_data
     └── proxy
         └── proxy
 ```        
@@ -65,7 +65,7 @@ Folders description:
     
 - `SALT/master` mounted under salt-master container `/etc/salt/` folder, contains master related configuration
 - `SALT/proxy` mounted under salt-minion container `/etc/salt/` folder, contains proxy-minion related configuration
-- `SALT/nornir_salt_data` mounted under salt-minion container `/var/salt-nornir/` folder for files produced by `tf` and `nr.learn` functions
+- `SALT/salt_nornir_data` mounted under salt-minion container `/var/salt-nornir/` folder for files produced by `tf` and `nr.learn` functions
 
 ## Python Packages Version
 

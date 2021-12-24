@@ -38,5 +38,5 @@ services:
         target: /etc/salt/ 
       # bind folder with proxy minion data files        
       - type: bind
-        source: ./SALT/nornir_salt_data/
-        target: /var/nornir-salt/  
+        source: ./SALT/salt_nornir_data/
+        target: /var/salt-nornir/  
