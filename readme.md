@@ -55,7 +55,7 @@ salt_nornir_docker/
     │   │   └── top.sls
     │   ├── states
     │   ├── templates
-	│   └── rpc
+    │   └── rpc
     ├── salt_nornir_data
     └── proxy
         └── proxy
