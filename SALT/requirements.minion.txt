@@ -22,5 +22,5 @@ tabulate==0.8.9
 ttp==0.8.2
 ttp-templates==0.1.2
 xmltodict==0.12.0
-nornir-salt==0.8.*
-salt-nornir==0.8.*
+nornir-salt==0.9.*
+salt-nornir==0.9.*
