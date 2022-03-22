@@ -11,8 +11,7 @@ RUN curl -fsSL https://repo.saltproject.io/py3/redhat/7/x86_64/${SALT_VERSION}.r
 RUN yum install -y salt-minion
 
 # do python3 libs installation
-COPY ./SALT/requirements.minion.txt /tmp/requirements.txt
-RUN python3 -m pip install -r /tmp/requirements.txt --ignore-installed PyYAML
+RUN python3 -m pip install salt-nornir[prodmax] --ignore-installed PyYAML
 
 # Install scrapli dependencies
 RUN yum install -y openssh-server openssh-clients

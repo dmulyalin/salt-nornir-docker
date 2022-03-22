@@ -11,7 +11,6 @@ RUN curl -fsSL "https://repo.saltproject.io/py3/redhat/7/x86_64/${SALT_VERSION}.
 RUN yum install -y salt-master
 
 # do python libs installation
-COPY ./SALT/requirements.master.txt /tmp/requirements.txt
-RUN python3 -m pip install -r /tmp/requirements.txt --ignore-installed PyYAML
+RUN python3 -m pip install salt-nornir[prodmin] --ignore-installed PyYAML
 
 ENTRYPOINT salt-master -l $LOG_LEVEL
