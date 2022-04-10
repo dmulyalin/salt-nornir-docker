@@ -18,7 +18,7 @@ By default `nrp1` proxy pillar comes with configuration for always-on sandbox de
 can start experimenting with proxy-minion straight away.
 
 Refer to wikipage for [examples](https://github.com/dmulyalin/salt-nornir-docker/wiki) on how to use 
-salt-nornir proxy minion to manage network devices.
+Salt-Nornir proxy minion to manage network devices.
 
 To start managing your devices add them to Nornir Proxy Minion Pillar inventory, see notes below, and
 restart Proxy Minion container `docker restart salt-minion-3004-nrp1`
@@ -29,7 +29,7 @@ Base image used to build containers is `centos:7`
 
 Docker-compose makes use of these variables stored in `.env` file:
 
-- `SALT_VERSION` - version of SaltStack to install, default is 3004, can be any of listed in [this repository](https://repo.saltproject.io/#rhel) for `REDHAT / CENTOS 7 PY3`
+- `SALT_VERSION` - version of SaltStack to install, default is 3004 pulled from [REDHAT / CENTOS 7 PY3 repository](https://repo.saltproject.io/#rhel), other supported versions are - 3003 and 3002
 - `LOG_LEVEL` - logging level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
 - `PROXY_ID` - Nornir Proxy Minion ID, default is 'nrp1'
 
@@ -69,14 +69,29 @@ Folders description:
 
 ## Python Packages Version
 
-`requirements.minion.txt` indicates versions of Python packages that were tested and confirmed working together. 
-This file used to install Python packages for minion container of all the modules that might be used by Salt 
-Nornir Proxy Minion, edit requirements file to remove unnecessary packages or change versions.
+Salt-Norir and Nornir-Salt installed using these extras:
 
-For example, if no plans to use Netconf to manage devices can remove related packages from `requirements.minion.txt`
-such as `ncclient` and `scrapli-netconf`.
+- Salt-Master - `prodmin` i.e. `python3 -m pip install salt-nornir[prodmin]`
+- Salt-Minion - `prodmax` i.e. `python3 -m pip install salt-nornir[prodmax]`
 
-Python version tested is 3.6
+Python version used in container is 3.6.8
+
+## Updating Docker Containers
+
+It is recommended to re-build the container from scratch every time when
+need to update them to different version of SaltStack or Salt-Nornir/Nornir-Salt.
+
+SaltStack pillar and minion data saved on the volumes mounted from `SALT`
+directory, no need to backup them unless planning to remove `SALT` directory.
+
+Steps to update salt-nornir-docker containers are:
+
+1. List containers to find out their names: `docker container ls`
+2. Stop containers using names from `NAMES` column: `docker container stop salt-minion-3004-nrp1` and `docker container stop salt-master-3004`
+3. Remove containers: `docker container rm salt-minion-3004-nrp1` and `docker container rm salt-master-3004`
+4. Find `IMAGE ID` for `salt-nornir-docker` images: `docker image ls`
+5. Remove images: `docker image rm -f 1c33fe852c44 6ebc37b30eef` - where `1c33fe852c44 6ebc37b30eef` are `IMAGE ID` from step 4
+6. Adjust configuration - `.env` variables or `Docker` files - if required and re-build the containers: `docker-compose up`
 
 ## Configuring Nornir Proxy Minion
 
@@ -360,8 +375,9 @@ Some useful commands.
 
 Documentation is a good place to continue:
 
-- [Salt-nornir documentation](https://salt-nornir.readthedocs.io/en/latest/)
-- [Nornir-Salt documentation](https://nornir-salt.readthedocs.io/en/latest/)
+- [Salt-Nornir documentation](https://salt-nornir.readthedocs.io/)
+- [Nornir-Salt documentation](https://nornir-salt.readthedocs.io/)
+- [Nornir documentation](https://nornir.readthedocs.io/)
+- [SaltStack documentation](https://docs.saltproject.io/en/getstarted/)
 
-More salt-nornir usage [examples](https://github.com/dmulyalin/salt-nornir-docker/wiki) can 
-be found on wikipage.
+Salt-Nornir Proxy Minion [usage examples](https://github.com/dmulyalin/salt-nornir-docker/wiki)
