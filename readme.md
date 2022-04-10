@@ -78,11 +78,11 @@ Python version used in container is 3.6.8
 
 ## Updating Docker Containers
 
-It is recommended to re-build the container from scratch every time when
+It is recommended to re-build the containers from scratch every time when
 need to update them to different version of SaltStack or Salt-Nornir/Nornir-Salt.
 
 SaltStack pillar and minion data saved on the volumes mounted from `SALT`
-directory, no need to backup them unless planning to remove `SALT` directory.
+directory, it is recommended to back up `SALT` directory before proceeding.
 
 Steps to update salt-nornir-docker containers are:
 
