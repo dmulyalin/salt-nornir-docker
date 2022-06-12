@@ -25,11 +25,11 @@ restart Proxy Minion container `docker restart salt-minion-3004-nrp1`
 
 ## Docker-Compose build and environment variables
 
-Base image used to build containers is `centos:7`
+Base image used to build containers is `rockylinux:8.5`
 
 Docker-compose makes use of these variables stored in `.env` file:
 
-- `SALT_VERSION` - version of SaltStack to install, default is 3004 pulled from [REDHAT / CENTOS 7 PY3 repository](https://repo.saltproject.io/#rhel), other supported versions are - 3003 and 3002
+- `SALT_VERSION` - version of SaltStack to install, default is 3004, other tested versions are - 3003 and 3002
 - `LOG_LEVEL` - logging level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
 - `PROXY_ID` - Nornir Proxy Minion ID, default is 'nrp1'
 
@@ -74,7 +74,7 @@ Salt-Norir and Nornir-Salt installed using these extras:
 - Salt-Master - `prodmin` i.e. `python3 -m pip install salt-nornir[prodmin]`
 - Salt-Minion - `prodmax` i.e. `python3 -m pip install salt-nornir[prodmax]`
 
-Python version used in container is 3.6.8
+Python version used in container is 3.9.7
 
 ## Updating Docker Containers
 

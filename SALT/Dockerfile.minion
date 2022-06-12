@@ -1,19 +1,15 @@
-FROM centos:7
+FROM rockylinux:8.5
 
-# install SALT Minion
-RUN yum install -y python3
-RUN python3 -m pip install pip setuptools --upgrade
-RUN rpm --import https://repo.saltproject.io/py3/redhat/7/x86_64/latest/SALTSTACK-GPG-KEY.pub
+# install misc libs
+RUN dnf install -y python3.9 nano tree openssh-server openssh-clients
+RUN python3 -m pip install pip setuptools wheel --upgrade
 
 ARG SALT_VERSION=3004
 
-RUN curl -fsSL https://repo.saltproject.io/py3/redhat/7/x86_64/${SALT_VERSION}.repo | tee /etc/yum.repos.d/salt.repo
-RUN yum install -y salt-minion
+# install SALT
+RUN python3 -m pip install salt==${SALT_VERSION}
 
-# do python3 libs installation
-RUN python3 -m pip install salt-nornir[prodmax] --ignore-installed PyYAML
-
-# Install scrapli dependencies
-RUN yum install -y openssh-server openssh-clients
+# do python libs installation
+RUN python3 -m pip install salt-nornir[prodmax]
 
 ENTRYPOINT salt-proxy --proxyid=$PROXY_ID -l $LOG_LEVEL
