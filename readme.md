@@ -12,7 +12,7 @@ and [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git):
  
 1. Clone this repository: `git clone https://github.com/dmulyalin/salt-nornir-docker.git`
 2. `cd salt-nornir-docker` and start containers `docker-compose up`, build takes 5-10 minutes
-3. Access salt-master shell `docker exec -it salt-master-3004 bash` and accept minion key `salt-key -a nrp1`
+3. Access salt-master shell `docker exec -it salt-master-3006 bash` and accept minion key `salt-key -a nrp1`
 
 By default `nrp1` proxy pillar comes with configuration for always-on sandbox devices, as a result
 can start experimenting with proxy-minion straight away.
@@ -21,7 +21,7 @@ Refer to wikipage for [examples](https://github.com/dmulyalin/salt-nornir-docker
 Salt-Nornir proxy minion to manage network devices.
 
 To start managing your devices add them to Nornir Proxy Minion Pillar inventory, see notes below, and
-restart Proxy Minion container `docker restart salt-minion-3004-nrp1`
+restart Proxy Minion container `docker restart salt-minion-3006-nrp1`
 
 ## Docker-Compose build and environment variables
 
@@ -29,7 +29,7 @@ Base image used to build containers is `rockylinux:8.5`
 
 Docker-compose makes use of these variables stored in `.env` file:
 
-- `SALT_VERSION` - version of SaltStack to install, default is 3004, other tested versions are - 3003 and 3002
+- `SALT_VERSION` - version of SaltStack to install, default is 3006, other tested versions are - 3005, 3004, 3003 and 3002
 - `LOG_LEVEL` - logging level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
 - `PROXY_ID` - Nornir Proxy Minion ID, default is 'nrp1'
 
@@ -87,8 +87,8 @@ directory, it is recommended to back up `SALT` directory before proceeding.
 Steps to update salt-nornir-docker containers are:
 
 1. List containers to find out their names: `docker container ls`
-2. Stop containers using names from `NAMES` column: `docker container stop salt-minion-3004-nrp1` and `docker container stop salt-master-3004`
-3. Remove containers: `docker container rm salt-minion-3004-nrp1` and `docker container rm salt-master-3004`
+2. Stop containers using names from `NAMES` column: `docker container stop salt-minion-3006-nrp1` and `docker container stop salt-master-3006`
+3. Remove containers: `docker container rm salt-minion-3006-nrp1` and `docker container rm salt-master-3006`
 4. Find `IMAGE ID` for `salt-nornir-docker` images: `docker image ls`
 5. Remove images: `docker image rm -f 1c33fe852c44 6ebc37b30eef` - where `1c33fe852c44 6ebc37b30eef` are `IMAGE ID` from step 4
 6. Adjust configuration - `.env` variables or `Docker` files - if required and re-build the containers: `docker-compose up`
@@ -101,7 +101,7 @@ default proxy minion ID/Name is `nrp1`, need to populate inventory data in `SALT
 Once ready, modify `nrp1.sls` pillar accordingly to list details for network devices you planning to manage.
 
 Each time `SALT/master/pillar/nrp1.sls` pillar file modified, need to restart salt-minion container to pick up
-updated inventory data - `docker restart salt-minion-3004-nrp1`.
+updated inventory data - `docker restart salt-minion-3006-nrp1`.
 
 Platform attribute value is mandatory as connections plugins need it to understand what type of driver to use for 
 device managing, here is a list where to find `platform` attribute values:
@@ -357,7 +357,7 @@ Some useful commands.
 | docker exec -it salt-master bash        | Drop into salt-master container shell             |
 | docker exec -it salt-minion bash        | Drop into salt-minion container shell             |
 | docker restart salt-master              | Restart salt-master container                     |
-| docker restart salt-minion-3004-nrp1    | Restart salt-minion container                     |
+| docker restart salt-minion-3006-nrp1    | Restart salt-minion container                     |
 | docker-compose stop                     | stop salt-minion and master containers altogether |
 | docker-compose up                       | start salt-minion and master containers           |
 | docker-compose build                    | rebuild containers                                |

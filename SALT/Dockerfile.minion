@@ -1,15 +1,12 @@
-FROM rockylinux:8.5
+FROM python:3.9-slim-bullseye
 
-# install misc libs
-RUN dnf install -y python3.9 nano tree openssh-server openssh-clients
-RUN python3 -m pip install pip setuptools wheel --upgrade
+ARG SALT_VERSION=3006
 
-ARG SALT_VERSION=3004
-
-# install SALT
-RUN python3 -m pip install salt==${SALT_VERSION}
-
-# do python libs installation
-RUN python3 -m pip install salt-nornir[prodmax]
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y openssh-client openssh-server gcc g++ autoconf make libffi-dev libssl-dev && \
+    apt-get clean && \
+    pip install --no-cache-dir pip setuptools wheel poetry --upgrade && \
+	pip install --no-cache-dir salt-nornir[prodmaxminion] && \
+	USE_STATIC_REQUIREMENTS=1 pip install --no-cache-dir salt==${SALT_VERSION}
 
 ENTRYPOINT salt-proxy --proxyid=$PROXY_ID -l $LOG_LEVEL
