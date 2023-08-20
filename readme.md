@@ -29,7 +29,7 @@ Base image used to build container is `python:3.9.7-slim-bullseye`
 
 Docker compose makes use of these variables stored in `.env` file:
 
-- `SALT_VERSION` - version of SaltStack to install, default is 3006, other tested versions are - 3005, 3004, 3003 and 3002
+- `SALT_VERSION` - version of SaltStack to install, default is 3006.2
 - `LOG_LEVEL` - logging level, default is 'debug' can be any of 'all', 'garbage', 'trace', 'debug', 'profile', 'info', 'warning', 'error', 'critical', 'quiet'
 - `PROXY_ID` - Nornir Proxy Minion ID, default is 'nrp1'
 - `SALT_MASTER` - True or False, if True will start salt-master process inside the container
