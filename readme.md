@@ -132,7 +132,7 @@ curl http://127.0.0.1:8001/run \
     -d client='local' \
     -d tgt='nrp1' \
     -d fun='nr.nornir' \
-	-d arg='version' \
+    -d arg='version' \
     -d username='saltuser' \
     -d password='saltpass' \
     -d eauth='sharedsecret'
