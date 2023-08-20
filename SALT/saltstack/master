@@ -1,0 +1,52 @@
+interface: 0.0.0.0
+pki_dir: /etc/salt/pki/master
+timeout: 120
+
+file_roots:
+  base:
+    - /etc/salt/
+    - /etc/salt/states/
+    - /etc/salt/templates/
+
+pillar_roots:
+  base:
+    - /etc/salt/pillar/
+    
+# --------------------------------------------------------
+# Configure salt-api REST API 
+# --------------------------------------------------------
+# Reference https://docs.saltproject.io/en/master/ref/netapi/all/salt.netapi.rest_cherrypy.html
+rest_cherrypy:
+  debug: True
+  host: 0.0.0.0
+  port: 8001
+  disable_ssl: True
+
+# Reference https://docs.saltproject.io/en/master/topics/netapi/netapi-enable-clients.html
+# Reference https://docs.saltproject.io/en/latest/ref/configuration/master.html#netapi-enable-clients
+# enable all netapi cliets
+netapi_enable_clients:
+  - local
+  - local_async
+  - local_batch
+  - local_subset
+  - runner
+  - runner_async
+  - ssh
+  - wheel
+  - wheel_async
+  
+# Allow saltuser to execute anything
+external_auth:
+  sharedsecret:
+    saltuser: ['.*', '@wheel', '@runner', '@jobs'] 
+    
+# Specify sharedsecred value
+# Reference https://docs.saltproject.io/en/master/ref/auth/all/salt.auth.sharedsecret.html
+sharedsecret: saltpass
+
+# Allow saltuser to publish anything
+publisher_acl:
+  saltuser:
+    - .*
+

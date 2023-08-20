@@ -2,41 +2,30 @@ version: "3.9"
 
 services:
 
-  salt-master:
-    container_name: "salt-master-${SALT_VERSION}"
-    hostname: 'salt-master-${SALT_VERSION}'
+  saltstack:
+    container_name: "saltstack"
+    hostname: 'saltstack'
     build:
       context: .
-      dockerfile: SALT/Dockerfile.master
-      args:
-        SALT_VERSION: "${SALT_VERSION}"
-    environment:
-      LOG_LEVEL: "${LOG_LEVEL}"
-    volumes:
-      # bind folder with master files
-      - type: bind
-        source: ./SALT/master/
-        target: /etc/salt/   
-        
-  salt-minion:
-    container_name: "salt-minion-${SALT_VERSION}-${PROXY_ID}"
-    hostname: "salt-minion-${SALT_VERSION}-${PROXY_ID}"
-    build:
-      context: .
-      dockerfile: SALT/Dockerfile.minion
+      dockerfile: SALT/Dockerfile.saltstack
       args:
         SALT_VERSION: "${SALT_VERSION}"
     environment:
       LOG_LEVEL: "${LOG_LEVEL}"
       PROXY_ID: "${PROXY_ID}"
-    depends_on:
-      - salt-master
+      SALT_MASTER: "${SALT_MASTER}"
+      SALT_API: "${SALT_API}"
+      SALT_PROXY: "${SALT_PROXY}"
     volumes:
-      # bind folder with proxy minion files
+      # bind folder with master files
       - type: bind
-        source: ./SALT/proxy/
-        target: /etc/salt/ 
+        source: ./SALT/saltstack/
+        target: /etc/salt/   
       # bind folder with proxy minion data files        
       - type: bind
         source: ./SALT/salt_nornir_data/
-        target: /var/salt-nornir/  
+        target: /var/salt-nornir/ 
+    # expose REST API port
+    ports:
+      - "8001:8001/tcp"
+        

@@ -1,0 +1,23 @@
+FROM python:3.9.7-slim-bullseye
+
+ADD SALT/saltinit.py /usr/local/bin/saltinit
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y openssh-client openssh-server gcc g++ autoconf make libffi-dev libssl-dev dumb-init && \
+    apt-get clean && \
+    pip install --no-cache-dir pip setuptools wheel poetry pytest --upgrade && \
+    useradd -m saltuser && \
+    usermod -g root saltuser && \
+    chmod 775 /usr/bin/dumb-init && \
+    chmod 775 /usr/local/bin/saltinit
+
+RUN pip install --no-cache-dir salt_nornir[prodmaxmaster] --upgrade && \
+    pip install --no-cache-dir salt_nornir[prodmaxminion] --upgrade
+
+ARG SALT_VERSION=3006.2
+
+RUN USE_STATIC_REQUIREMENTS=1 pip install --no-cache-dir salt==${SALT_VERSION}
+
+ENTRYPOINT ["/usr/bin/dumb-init"]
+CMD ["/usr/local/bin/saltinit"]
+

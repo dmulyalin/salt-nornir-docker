@@ -3,10 +3,10 @@ proxy:
     
 hosts:
   csr1000v-1:
-    hostname: sandbox-iosxe-latest-1.cisco.com
+    hostname: sandbox-iosxe-recomm-1.cisco.com
     platform: cisco_ios
     username: developer
-    password: C1sco12345
+    password: lastorangerestoreball8876
     port: 22
     connection_options:
       pyats:
@@ -50,7 +50,7 @@ hosts:
           auth_strict_key: False
           transport_options: 
             netconf_force_pty: False
-  iosxr1:
+  BOSCRT01:
     hostname: sandbox-iosxr-1.cisco.com
     platform: cisco_xr
     username: admin
@@ -60,7 +60,7 @@ hosts:
       pyats:
         extras:
           devices:
-            iosxr1:
+            BOSCRT01:
               os: iosxr
               connections:
                 default:
@@ -88,8 +88,8 @@ hosts:
           auth_strict_key: False
           transport_options: 
             netconf_force_pty: False
-  sandbox-nxos-1.cisco:
-    hostname: sandbox-nxos-1.cisco.com
+  sbx-ao:
+    hostname: sbx-nxos-mgmt.cisco.com
     platform: nxos_ssh
     username: admin
     password: "Admin_1234!"
@@ -98,7 +98,7 @@ hosts:
       pyats:
         extras:
           devices:
-            sandbox-nxos-1.cisco:
+            sbx-ao:
               os: nxos
               connections:
                 default:

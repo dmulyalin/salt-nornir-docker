@@ -1,3 +1,0 @@
-master: salt-master
-multiprocessing: true
-pki_dir: /etc/salt/pki/proxy 
