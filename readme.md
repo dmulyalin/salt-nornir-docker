@@ -194,7 +194,7 @@ repository.
 
 If instead of publishing to Dockerhub want to run custom image locally, then after
 step 2 need to update `SALT/Dockerfile.saltstack` `FROM` directive to 
-use custom image e.g. instead of `FROM dmulyalin/salt-nornir:latest` specify 
+use custom image i.e. instead of `FROM dmulyalin/salt-nornir:latest` specify 
 `FROM salt-nornir:py39-st3006.2-sn0.20.4` and run `docker compose up` as usual.
 
 Alternatively, can skip step 2 altogether and update `docker-compose.yaml` to 
