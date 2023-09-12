@@ -188,11 +188,11 @@ To build an image using `SALT/Dockerfile.saltstack.build` and publish it to Dock
 4. Re-tag the image: `docker tag salt-nornir:py39-st3006.2-sn0.20.4 <dockerhub-username>/salt-nornir:py39-st3006.2-sn0.20.4`
 5. Push the image: `docker push <dockerhub-username>/salt-nornir:py39-st3006.2-sn0.20.4`
 
-Assumption are  `<dockerhub-username>` is an existing account username on
-(hub.docker.com)[https://hub.docker.com/] and this account has `salt-nornir`
+Assumptions are  `<dockerhub-username>` is an existing account username on
+[hub.docker.com](https://hub.docker.com/) and this account has `salt-nornir`
 repository.
 
-If instead of publishing to Dockerhub need to run custom image locally then after
+If instead of publishing to Dockerhub want to run custom image locally, then after
 step 2 need to update `SALT/Dockerfile.saltstack` `FROM` directive to 
 use custom image e.g. instead of `FROM dmulyalin/salt-nornir:latest` specify 
 `FROM salt-nornir:py39-st3006.2-sn0.20.4` and run `docker compose up` as usual.
