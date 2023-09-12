@@ -48,6 +48,7 @@ salt_nornir_docker/
 ├── readme.md
 └── SALT
     ├── Dockerfile.saltstack
+    ├── Dockerfile.saltstack.build
     ├── saltinit.py
     ├── salt_nornir_data
     │   └── placeholder
@@ -78,7 +79,7 @@ Salt-Norir and Nornir-Salt installed using these extras:
 - `prodmaxmaster` i.e. `python3 -m pip install salt-nornir[prodmaxmaster]`
 - `prodmaxminion` i.e. `python3 -m pip install salt-nornir[prodmaxminion]`
 
-Python version used in a container is 3.9.7
+Python version used in a container is 3.9.7.
 
 ## Updating Docker Container
 
@@ -173,3 +174,44 @@ Documentation is a good place to continue:
 - [SaltStack documentation](https://docs.saltproject.io/en/getstarted/)
 
 Salt-Nornir Proxy Minion [usage examples](https://github.com/dmulyalin/salt-nornir-docker/wiki)
+
+## Building Docker Image
+
+To build an image, this repository comes with `SALT/Dockerfile.saltstack.build` dockerfile,
+it can be used to build custom docker image.
+
+To build an image using `SALT/Dockerfile.saltstack.build` and publish it to Dockerhub:
+
+1. Navigate to `salt_nornir_docker` folder: `cd salt_nornir_docker`
+2. Build image: `docker build  -t salt-nornir:py39-st3006.2-sn0.20.4 -f SALT/Dockerfile.saltstack.build .`
+3. Login Dockerhub: `docker login`
+4. Re-tag the image: `docker tag salt-nornir:py39-st3006.2-sn0.20.4 <dockerhub-username>/salt-nornir:py39-st3006.2-sn0.20.4`
+5. Push the image: `docker push <dockerhub-username>/salt-nornir:py39-st3006.2-sn0.20.4`
+
+Assumption are  `<dockerhub-username>` is an existing account username on
+(hub.docker.com)[https://hub.docker.com/] and this account has `salt-nornir`
+repository.
+
+If instead of publishing to Dockerhub need to run custom image locally then after
+step 2 need to update `SALT/Dockerfile.saltstack` `FROM` directive to 
+use custom image e.g. instead of `FROM dmulyalin/salt-nornir:latest` specify 
+`FROM salt-nornir:py39-st3006.2-sn0.20.4` and run `docker compose up` as usual.
+
+Alternatively, can skip step 2 altogether and update `docker-compose.yaml` to 
+use `SALT/Dockerfile.saltstack.build` dockerfile e.g.:
+
+```
+version: "3.9"
+
+services:
+
+  saltstack:
+    container_name: "saltstack"
+    hostname: 'saltstack'
+    build:
+      context: .
+      dockerfile: SALT/Dockerfile.saltstack.build
+	  ...
+```
+
+running `docker compose up` will trigger new image build.
