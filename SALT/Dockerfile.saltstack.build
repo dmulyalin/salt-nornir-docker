@@ -14,7 +14,7 @@ RUN apt-get update && \
 RUN pip install --no-cache-dir salt_nornir[prodmaxmaster] --upgrade && \
     pip install --no-cache-dir salt_nornir[prodmaxminion] --upgrade
 
-ARG SALT_VERSION=3006.2
+ARG SALT_VERSION=3006.5
 
 RUN USE_STATIC_REQUIREMENTS=1 pip install --no-cache-dir salt==${SALT_VERSION}
 
